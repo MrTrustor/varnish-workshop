@@ -9,6 +9,8 @@
 <body>
 <?php
 
+session_start();
+$_SESSION['active'] = "yes";
 echo "Hello world!";
 
 // Gestion du cache
