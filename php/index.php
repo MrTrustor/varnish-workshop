@@ -9,20 +9,10 @@
 <body>
 <?php
 
-// Simulation d'un gros script PHP
-sleep(2);
-
-// On fait des choses avec les sessions
-session_start();
-if (!isset($_SESSION['count'])) {
-  $_SESSION['count'] = 1;
-} else {
-  $_SESSION['count']++;
-}
-echo "You have been ".$_SESSION['count']." times on this page!";
+echo "Hello world!";
 
 // Gestion du cache
-$seconds_to_cache = 0;
+$seconds_to_cache = 30;
 
 if ( $seconds_to_cache > 0 ) {
 	$ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";

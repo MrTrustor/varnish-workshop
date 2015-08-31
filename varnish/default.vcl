@@ -14,6 +14,10 @@ vcl 4.0;
 
 import std;
 
+acl workshop {
+	"91.208.181.161";
+}
+
 # Default backend definition. Set this to point to your content server.
 backend default {
     .host = "127.0.0.1";
@@ -25,6 +29,17 @@ sub vcl_recv {
 	#
 	# Typically you clean up the request here, removing cookies you don't need,
 	# rewriting the request, etc.
+	if (req.http.X-Forwarded-For) {
+		std.log("This request has a X-Forwarded-For header.");
+		if (std.ip(req.http.X-forwarded-for, "0.0.0.0") ~ workshop) {
+			std.log("The IP in X-Forwarded-For is in the workshop ACL");
+		} else {
+			std.log("The IP in X-Forwarded-For is not in the workshop ACL");
+		}
+	} else {
+		std.log("This request has no X-Forwarded-For header.");
+	}
+
 	return (hash);
 }
 
