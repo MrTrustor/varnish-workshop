@@ -12,4 +12,8 @@
  * le user admin a tous les droits via sudo
 
 ## Exercice
-Utiliser le vmod curl (deja installe) pour ajouter un header contenant la date a laquelle la requete a ete geree par Varnish dans la reponse.
+Utiliser le vmod vsthrottle (deja installe) pour limiter le nombre de requete d'utilisateurs non connectes.
+Tips: les sessions sont stockees dans Memcached.
+
+## Solution
+On recupere l'ID de session, puis on interroge memcached via le vmod-memcached pour savoir si la session existe.
