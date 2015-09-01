@@ -9,5 +9,5 @@
 
 ## Notes
 
- * mot de passe root MySQL : oxalide
- * le user admin a tous les droits via sudo
+ * Le user admin a tous les droits via sudo,
+ * Les differentes parties de la presentation sont disponibles sur des branches dediees.
