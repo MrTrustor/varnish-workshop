@@ -13,3 +13,8 @@
 
 ## Exercice
 Utiliser le vmod vsthrottle (deja installe) pour limiter le nombre de requete d'utilisateurs non connectes. Tips: les sessions sont stockees dans Memcached.
+
+## References
+ * Vmod vsthrottle : <https://github.com/varnish/libvmod-vsthrottle>
+ * Liste des vmods pour Varnish 4 : <https://www.varnish-cache.org/vmods?field_vmod_status_value=All&term_node_tid_depth=18&keys=>
+ * Memcached protocole : <https://github.com/memcached/memcached/blob/master/doc/protocol.txt>
