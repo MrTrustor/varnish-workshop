@@ -41,7 +41,6 @@ sub vcl_backend_response {
     	#
     	# Here you clean the response headers, removing silly Set-Cookie headers
 	# and other mistakes your backend does.
-
 	if (beresp.status >= 400) {
 		set beresp.ttl = 0s;
 	}
@@ -52,9 +51,8 @@ sub vcl_deliver {
     	# response to the client.
     	#
     	# You can do accounting or modifying the final object here.
-	if (resp.http.Age) {
-		set resp.http.Age-Up = resp.http.Age;
-		unset resp.http.Age;
+	if (resp.http.Cache-Control ~ "max-age=" ) {
+		set resp.http.Expires = "" + (now + std.duration(regsub(resp.http.Cache-Control,"max-age=([0-9]+).*$","\1")+"s", 0s));
 	}
 
 	# header pour hit/miss
