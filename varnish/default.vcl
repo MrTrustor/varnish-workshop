@@ -15,9 +15,14 @@ vcl 4.0;
 import std;
 
 # Default backend definition. Set this to point to your content server.
-backend default {
-    .host = "127.0.0.1";
-    .port = "8080";
+backend apache {
+	.host = "127.0.0.1";
+	.port = "8080";
+}
+
+backend varnish2 {
+	.host = "127.0.0.1";
+	.port = "81";
 }
 
 sub vcl_recv {
@@ -25,6 +30,11 @@ sub vcl_recv {
 	#
 	# Typically you clean up the request here, removing cookies you don't need,
 	# rewriting the request, etc.
+	set req.backend_hint = apache;
+	if(!req.http.X-Via-Varnish) {
+		set req.backend_hint = varnish2;
+		set req.http.X-Via-Varnish = "varnish1";
+	}
 
 	return (hash);
 }
@@ -41,10 +51,6 @@ sub vcl_backend_response {
     	#
     	# Here you clean the response headers, removing silly Set-Cookie headers
 	# and other mistakes your backend does.
-	if (beresp.http.Cache-Control ~ "max-age=" ) {
-		set beresp.http.Expires = "" + (now + std.duration(regsub(beresp.http.Cache-Control,"max-age=([0-9]+).*$","\1")+"s", 0s));
-	}
-
 	if (beresp.status >= 400) {
 		set beresp.ttl = 0s;
 	}
@@ -56,14 +62,7 @@ sub vcl_deliver {
     	#
     	# You can do accounting or modifying the final object here.
 	if (resp.http.Cache-Control ~ "max-age=" ) {
-		set resp.http.X-Max-Age = std.integer(regsub(resp.http.Cache-Control,"max-age=([0-9]+).*$","\1"), 0)/2;
-		set resp.http.Cache-Control = regsub(resp.http.Cache-Control,"max-age=([0-9]+).*$","max-age="+resp.http.X-Max-Age);
 		set resp.http.Expires = "" + (now + std.duration(regsub(resp.http.Cache-Control,"max-age=([0-9]+).*$","\1")+"s", 0s));
-		unset resp.http.X-Max-Age;
-	}
-	if (resp.http.Age) {
-		set resp.http.Age-Low = resp.http.Age;
-		unset resp.http.Age;
 	}
 
 	# header pour hit/miss

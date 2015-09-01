@@ -1,4 +1,4 @@
-# Oxalide Workshop #2
+# Oxalide Workshop #2 - Partage de cache entre deux Varnish
 
 ## Contenu
 
@@ -9,11 +9,21 @@
 
 ## Notes
 
- * le user admin a tous les droits via sudo
+ * Le user admin a tous les droits via sudo,
+ * Deux Varnish tournent : varnish1 sur le port 80 et varnish2 sur le port 81,
+ * Les commandes varnishadm, varnishncsa et varnishlog ont ete dupliquee en varnishadm2, varnishncsa2 et varnishlog2 pour la deuxieme instance.
 
-## Explications
- * Deux Varnish tournent (ports 80 et 81),
- * Le Varnish "Up" (port 81) a pour backend le Varnish "Low" (port 80),
- * Le Varnish "Low" a pour backend Apache,
- * Avant de donner des objets au Varnish Up, le Varnish Low divise les TTL par deux,
- * Observer les headers Age-Low, Age-Up, X-Cache-Low, X-Cache-Up, Cache-Control et Expires.
+## Exercice
+Configurer les deux instances de Varnish pour que si elle n'ont pas l'objet demande, elles interroge l'autre instance de Varnish plutot qu'Apache.
+Tips: Attention aux boucles de requetes infinies.
+
+## Solution
+Dans le default.vcl de chacune des deux instances :
+ * Declarer l'autre instance comme backend,
+ * Declarer Apache comme backend par defaut,
+ * Verifier la presence d'un header X-Via-Varnish sur la requete :
+  * Si le header existe, rester sur Apache,
+  * Si le header n'existe pas, changer de backend pour utiiser l'autre Varnish et placer le header X-Via-Varnish.
+
+## Discussion
+Quels sont les inconvenients de cette solution ?
