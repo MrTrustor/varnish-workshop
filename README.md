@@ -9,7 +9,7 @@
 
 ## Notes
 
- * le user admin a tous les droits via sudo
+ * Le user vagrant a tous les droits via sudo
 
 ## Explications
  * Deux Varnish tournent (ports 80 et 81),
