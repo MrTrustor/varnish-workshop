@@ -9,7 +9,7 @@
 
 ## Notes
 
- * le user admin a tous les droits via sudo
+ * Le user vagrant a tous les droits via sudo
 
 ## Exercice
 On a un fichier index.php qui compte le nombre de visite que l'on a fait.
