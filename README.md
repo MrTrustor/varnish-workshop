@@ -9,7 +9,7 @@
 
 ## Notes
 
- * le user admin a tous les droits via sudo
+ * le user vagrant a tous les droits via sudo
 
 ## Exercice
 Utiliser le vmod vsthrottle (deja installe) pour limiter le nombre de requete d'utilisateurs non connectes.
