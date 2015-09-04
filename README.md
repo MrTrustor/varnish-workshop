@@ -9,7 +9,7 @@
 
 ## Notes
 
- * le user admin a tous les droits via sudo
+ * Le user vagrant a tous les droits via sudo
 
 ## AJAX - Solution
 On fait un simple appel AJAX vers un script qui n'est pas mis en cache et qui renvoie l'information dont on a besoin.
@@ -23,4 +23,4 @@ On remplace la valeur dont on a besoin par un appel ESI. Attention a la gestion 
  * Initialisation de la session PHP si besoin via un appel AJAX (index-esi.php et init-session.php)
  * Bloc ESI dans le HTML (index-esi.php et esi.php) ; Varnish va faire un appel vers l'URL indiquee pour remplacer ce bloc:
 
-	<esi:include src='/esi.php'/>
+    ''<esi:include src='/esi.php'/>''
