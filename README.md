@@ -9,7 +9,7 @@
 
 ## Notes
 
- * Le user admin a tous les droits via sudo,
+ * Le user vagrant a tous les droits via sudo,
  * Deux Varnish tournent : varnish1 sur le port 80 et varnish2 sur le port 81,
  * Les commandes varnishadm, varnishncsa et varnishlog ont ete dupliquee en varnishadm2, varnishncsa2 et varnishlog2 pour la deuxieme instance.
 
